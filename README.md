@@ -16,3 +16,6 @@ Explore top payment methods to learn how you can build with Rapyd in a single in
 - Open terminal and type "npm install http-server -g"
 - Open terminal in /front directory and type "http-server".
 - Turn on your browser and go to "http://localhost:8080"
+## Get Support 
+- https://community.rapyd.net 
+- https://support.rapyd.net 
