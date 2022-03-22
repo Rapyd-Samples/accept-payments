@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Rapyd example</title>
+    <meta name="description" content="Simple Rapyd API example app" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link id="favicon" href="https://files.readme.io/18a1355-small-favicon-32x32.png" rel="shortcut icon" type="image/png" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <div id="menu">
+        <h4>ENDPOINTS</h4>
+        <ul>
+            <li>
+                Customer Object
+                <ul>
+                    <li>
+                        <a href="#create_customer">Create Customer</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Customer Payment Method Object
+                <ul>
+                    <li>
+                        <a href="#list_customer_payment_methods">List Customer Payment Methods</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Payment Method Type Object
+                <ul>
+                    <li>
+                        <a href="#list_payment_methods_by_country">List Payment Methods by Country</a>
+                    </li>
+                    <li>
+                        <a href="#get_payment_method_required_fields">Get Payment Method Required Fields</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Payment Object
+                <ul>
+                    <li>
+                        <a href="#create_payment">Create Payment</a>
+                    </li>
+                    <li>
+                        <a href="#cancel_payment">Cancel Payment</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Checkout Page Object
+                <ul>
+                    <li>
+                        <a href="#create_checkout_page">Create Checkout Page</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="content">
+        <!-- CREATE CUSTOMER -->
+        <section class="section-wrapper" id="create_customer">
+          <h4>Create Customer</h4>
+          <div class="content-container">
+
+            <div class="form-div">
+              <h4>Inputs</h4>
+              <form id="create_customer_form" name="createCustomer">
+                <label>Customer Name *
+                    <input name="customer_name" type="text" required />
+                </label>
+                <p class="desc">The name of the individual customer or the business name.</p>
+
+<!--                <label>Email 
+                    <input name="email" type="text" />
+                </label>
+                <p class="desc">Customer's email address. Required for some payment methods.</p>
+
+                <label>Phone Number 
+                    <input name="phone_number" type="text" />
+                </label>
+                <p class="desc">Customer's primary phone number in E.164 format.</p>
+
+                <label>Description 
+                    <input name="description" type="text" />
+                </label>
+                <p class="desc">A text description of the customer.</p>
+
+                <label>Vat ID 
+                    <input name="business_vat_id" type="text" />
+                </label>
+                <p class="desc">The tax ID number of the customer.</p>
+
+                <label>Invoice Prefix 
+                    <input name="invoice_prefix" type="text" />
+                </label>
+                <p class="desc">A custom string that is prefixed to all invoices for this customer.</p> -->
+
+                <br />
+                <button type="submit">Create Customer</button>
+                <p class="desc">
+                    When the customer is created, you need to add a payment method
+                    to the customer for testing "Create Payment" endpoint (Rapyd
+                    Dashboard > Collect > Customers > Add Card icon)
+                </p>
+              </form>
+            </div>
+
+            <div class="result-div">
+              <h4>Result</h4>
+              <pre></pre>
+            </div>
+
+          </div>
+        </section>
+        <!-- LIST CUSTOMER PAYMENT METHODS -->
+        <section class="section-wrapper" id="list_customer_payment_methods" style="display: none">
+            <h4>List Customer Payment Methods</h4>
+            <div class="content-container">
+
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="list_customer_payment_methods_form" name="listCustomerPaymentMethods">
+                        <label>Customer ID *
+                            <input name="customer" type="text" required />
+                        </label>
+                        <p class="desc">ID of the customer. String starting with cus_.</p>
+
+                        <button type="submit">List Customer Payment Methods</button>
+                    </form>
+                </div>
+
+                <div class="result-div">
+                    <h4>Result</h4>
+                    <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+        <!-- LIST PAYMENT METHODS BY COUNTRY -->
+        <section class="section-wrapper" id="list_payment_methods_by_country" style="display: none">
+            <h4>List Payment Methods by Country</h4>
+            <div class="content-container">
+                
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="list_payment_methods_by_country_form" name="listPaymentMethodsByCountry">
+                        <label>Country *
+                            <input name="country" type="text" required />
+                        </label>
+                        <p class="desc">Two-letter ISO 3166-1 ALPHA-2 code for the country. Uppercase.</p>
+                        
+                        <button type="submit">List Payment Methods by Country</button>
+                    </form>
+                </div>
+                
+                <div class="result-div">
+                    <h4>Result</h4>
+                    <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+        <!-- GET PAYMENT METHOD REQUIRED FIELDS -->
+        <section class="section-wrapper" id="get_payment_method_required_fields" style="display: none">
+            <h4>Get Payment Method Required Fields</h4>
+            <div class="content-container">
+                
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="get_payment_method_required_fields_form" name="getPaymentMethodRequiredFields">
+                        <label>Type * 
+                            <input name="type" type="text" required />
+                        </label>
+                        <p class="desc">The type of the payment method.</p>
+
+                        <button type="submit">Get Payment Method Required Fields</button>
+                    </form>
+                </div>
+                
+                <div class="result-div">
+                  <h4>Result</h4>
+                  <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+        <!-- CREATE PAYMENT -->
+        <section class="section-wrapper" id="create_payment" style="display: none">
+            <h4>Create Payment</h4>
+            <div class="content-container">
+                
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="create_payment_form" name="createPayment">
+                        <label>Amount *
+                            <input name="amount" type="number" step="0.01" min="0.0" required />
+                        </label>
+                        <p class="desc">
+                            The amount of the payment, in units of the currency defined in
+                            currency. Decimal. Note: If you are using JavaScript, you must
+                            pass this value as a string if it is not an integer amount.
+                        </p>
+
+                        <label>Currency *
+                            <input name="currency" type="text" required />
+                        </label>
+                        <p class="desc">
+                            Defines the currency for the amount. Three-letter ISO 4217 code.
+                            In FX transactions, see full explanations on currency,
+                            fixed_side and requested_currency fields in Payment Object.
+                        </p>
+
+                        <label>Customer *
+                            <input name="customer" type="text" />
+                        </label>
+                        <p class="desc">
+                            ID of the customer. String starting with cus_. Required if
+                            Payment Method is blank.
+                        </p>
+
+                        <label>Payment Method *
+                            <input name="payment_method" type="text" />
+                        </label>
+                        <p class="desc">
+                            Payment Method ID. You can find it in List Customer Payment
+                            Methods.
+                        </p>
+
+<!--                        <label>Description 
+                            <input name="description" type="text" />
+                        </label>
+                        <p class="desc">Description of the payment.</p>
+
+                        <label>Expiration 
+                            <input name="expiration" type="datetime-local" />
+                        </label>
+                        <p class="desc">
+                            End of the time allowed for customer to make this payment, in
+                            local time. Must be after the current time.
+                        </p>-->
+
+                        <label>Complete Payment URL
+                            <input name="complete_payment_url" type="text" />
+                        </label>
+                        <p class="desc">
+                            URL where the customer is redirected after a successful payment.
+                            Required for bank redirect payment methods. <span style="color: red;">Localhost addresses are not
+                              valid</span>
+                        </p>
+
+                        <label>Error Payment URL
+                            <input name="error_payment_url" type="text" />
+                        </label>
+                        <p class="desc">
+                            URL where the customer is redirected in case of an error in the
+                            payment. Required for bank redirect payment methods. <span style="color: red;">Localhost addresses are not
+                              valid</span>
+                        </p>
+
+                        <button type="submit">Create Payment</button>
+                    </form>
+                </div>
+                
+                <div class="result-div">
+                    <h4>Result</h4>
+                    <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+        <!-- CANCEL PAYMENT -->
+        <section class="section-wrapper" id="cancel_payment" style="display: none">
+            <h4>Cancel Payment</h4>
+            <div class="content-container">
+                
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="cancel_payment_form" name="cancelPayment">
+                        <label>Payment *
+                            <input name="payment" type="text" required />
+                        </label>
+                        <p class="desc">
+                            ID of the payment. String starting with payment_.
+                        </p>
+
+                        <button type="submit">Cancel Payment</button>
+                    </form>
+                </div>
+                
+                <div class="result-div">
+                    <h4>Result</h4>
+                    <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+        <!-- CREATE CHECKOUT PAGE -->
+        <section class="section-wrapper" id="create_checkout_page" style="display: none">
+            <h4>Create Checkout Page</h4>
+            <div class="content-container">
+                
+                <div class="form-div">
+                    <h4>Inputs</h4>
+                    <form id="create_checkout_page_form" name="createCheckoutPage">
+                        <label>Amount *
+                            <input name="amount" type="number" step="0.01" required />
+                        </label>
+                        <p class="desc">
+                            The amount of the payment, in units of the currency defined in
+                            currency. Required if cart_items is not used. Decimal.
+                        </p>
+
+                        <label>Country *
+                            <input name="country" type="text" required />
+                        </label>
+                        <p class="desc">
+                            The two-letter ISO 3166-1 ALPHA-2 code for the country.
+                        </p>
+
+                        <label>Currency *
+                            <input name="currency" type="text" required />
+                        </label>
+                        <p class="desc">
+                            Defines the currency for the amount. Three-letter ISO 4217 code.
+                            For FX transactions, see Checkout Page Object.
+                        </p>
+
+                        <label>Customer 
+                            <input name="customer" type="text" />
+                        </label>
+                        <p class="desc">
+                            ID of the 'customer' object. String starting with cus_. When
+                            used, the customer has the option to save card details for
+                            future purchases. This field is required for certain production
+                            mode payment methods.
+                        </p>
+
+<!--                        <label>Description 
+                            <input name="description" type="text" />
+                        </label>
+                        <p class="desc">Description of the payment.</p>
+
+                        <label>Expiration 
+                            <input name="expiration" type="datetime-local" />
+                        </label>
+                        <p class="desc">
+                            Length of time for the payment to be completed after it is
+                            created, measured in seconds.
+                        </p>-->
+
+                        <label>Complete Payment URL
+                            <input name="complete_payment_url" type="text" />
+                        </label>
+                        <p class="desc">
+                            URL where the customer is redirected when payment is successful.
+                            Relevant to bank redirect payment methods. <span style="color: red;">Localhost addresses are not
+                              valid</span>
+                        </p>
+
+                        <label>Complete Checkout URL
+                            <input name="complete_checkout_url" type="text" />
+                        </label>
+                        <p class="desc">
+                            URL where the customer is redirected after pressing Finish to
+                            exit the hosted page. <span style="color: red;">Localhost addresses are not valid</span>
+                        </p>
+
+                        <label>Error Payment URL
+                            <input name="error_payment_url" type="text" />
+                        </label>
+                        <p class="desc">
+                            URL where the customer is redirected when payment is not
+                            successful. Relevant to bank redirect payment methods. <span style="color: red;">Localhost addresses are
+                              not valid</span>
+                        </p>
+
+                        <button type="submit">Create Checkout Page</button>
+                    </form>
+                </div>
+
+                <div class="result-div">
+                    <h4>Result</h4>
+                    <pre></pre>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+    <div id="webhooks">
+        <h4>WEBHOOKS</h4>
+        <div class="radio" style="visibility: hidden">
+            <div>
+                <input type="radio" id="poll" name="webhook" value="poll" checked />
+                <label for="poll">HTTP poll</label>
+            </div>
+            <div>
+                <input type="radio" id="ws" name="webhook" value="ws" />
+                <label for="ws">WebSocket</label>
+            </div>
+        </div>
+        <div id="webhooks_list"></div>
+    </div>
+
+    <script src="js/main.js" type="module"></script>
+</body>
+
+</html>

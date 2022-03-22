@@ -1,0 +1,204 @@
+body {
+  margin: 0;
+  display: flex;
+  gap: 0.5rem;
+  height: 100vh;
+  background-color: rgba(211, 211, 211, 0.1);
+}
+
+#menu {
+  height: 100%;
+  padding: 5px;
+  padding-bottom: 0;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+#menu h4 {
+  font-size: 1.2rem;
+}
+#menu li {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+#menu li a {
+  text-decoration: none;
+}
+#menu li a:hover {
+  text-decoration: underline;
+}
+#menu > ul {
+  background-color: #fff;
+  list-style: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(240, 128, 128, 0.3);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+#content {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  height: 100%;
+  flex: 1 1 0%;
+  /* width: calc(100% - 606px); */
+}
+.section-wrapper {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+}
+.section-wrapper > h4 {
+  font-size: 22px;
+  letter-spacing: 0.05rem;
+  color: rgba(128, 128, 128, 0.9);
+  margin: 0;
+  margin: 0.5rem 0rem;
+}
+.content-container {
+  display: flex;
+  flex: 1 1 0%;
+  border: 1px solid rgba(240, 128, 128, 0.3);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  height: 90%;
+}
+.form-div {
+  overflow: auto;
+  padding: 0.5rem;
+  flex-basis: 50%;
+  border-right: 1px solid rgba(240, 128, 128, 0.3);
+}
+
+.form-div > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-div > form label {
+  padding: 0rem 1rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  justify-content: space-between;
+}
+
+.form-div > form p {
+  padding: 0rem 1rem;
+}
+
+.form-div > form input {
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  padding: 7px;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.9);
+}
+
+.form-div > form input:focus,
+.form-div > form input:focus-visible {
+  border-color: rgba(240, 128, 128, 0.6);
+}
+
+.form-div > form button {
+  cursor: pointer;
+  margin: auto;
+  margin-bottom: 0.5rem;
+  background-color: lightcoral;
+  color: white;
+  border: 1px solid rgba(128, 128, 128, 0.9);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  transform: all 0.5s linear;
+}
+.form-div > form button:hover {
+  filter: brightness(92%);
+}
+.form-div > form button:active {
+  transform: scale(0.9);
+}
+
+#webhooks {
+  height: 100%;
+  width: 300px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+#webhooks div.radio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-left: 2rem;
+}
+#webhooks_list {
+  height: 88%;
+  overflow: auto;
+}
+h4 {
+  text-align: center;
+}
+
+.result-div {
+  height: 90%;
+  width: 60%;
+}
+.result-div pre {
+  font-size: 13px;
+  height: 90%;
+  overflow: auto;
+  padding: 1rem;
+/*  max-width: 350px;*/
+}
+.desc {
+  margin-top: 0;
+  font-size: 12px;
+  color: grey;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+  display: none !important;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}

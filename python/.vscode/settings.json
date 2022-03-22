@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/__pycache__": true
+  },
+  "cSpell.words": [
+    "aiofiles",
+    "dotenv",
+    "Dtos",
+    "pydantic",
+    "pyright",
+    "starlette",
+    "uvicorn"
+  ],
+  "python.analysis.extraPaths": [
+    "src"
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+}

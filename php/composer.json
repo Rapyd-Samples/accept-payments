@@ -1,0 +1,15 @@
+{
+    "name": "rapyd/rapyd-p-h-p",
+    "description": "Rapyd PHP example application.",
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "pecee/simple-router": "4.3.7.2",
+        "simple-validator/simple-validator": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Utils\\": "utils/",
+            "Controllers\\": "controllers/"
+      }
+    }
+}
