@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsOptional, IsPositive, IsString, IsUrl } from 'class-validator';
+import { IsOptional, IsPositive, IsString } from 'class-validator';
 
 export class CreatePaymentBody {
   @IsOptional()
@@ -11,6 +11,7 @@ export class CreatePaymentBody {
   @IsString()
   currency: string;
 
+  @IsOptional()
   @IsString()
   customer: string;
 

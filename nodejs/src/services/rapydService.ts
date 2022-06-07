@@ -12,6 +12,7 @@ import { CreatePaymentBody, PaymentResult } from '@/models/payment';
 import { PaymentMethodRequiredFields } from '@/models/paymentMethodRequiredFields';
 import { PaymentMethod } from '@/models/paymentMethod';
 import { plainToClass } from 'class-transformer';
+import { inspect } from 'util';
 
 class RapydService {
   private _accessKey: string;
@@ -104,16 +105,20 @@ class RapydService {
     }
   }
 
-  public async createPaymentCheckout(body: CreateCheckoutBody): Promise<any[]> {
+  public async createPaymentCheckout(body: CreateCheckoutBody): Promise<string> {
     try {
-      const response = await this._axiosClient.post<RapydResponse<any[]>>(`/v1/checkout`, body);
+      const response = await this._axiosClient.post<RapydResponse<any[]>>(`/v1/checkout`, {
+        ...body,
+        complete_checkout_url: body.complete_checkout_url || `${process.env.ORIGIN_URL}/complete`,
+        cancel_checkout_url: body.cancel_checkout_url || process.env.ORIGIN_URL,
+      });
 
-      return plainToClass(CheckoutResult, response.data.data, { excludeExtraneousValues: true });
+      const result = plainToClass(CheckoutResult, response.data.data, { excludeExtraneousValues: true }) as unknown as CheckoutResult;
+      return result.redirect_url;
     } catch (error) {
-      if (error.isAxiosError) {
-        throw new HttpException(+error.response.status, error.response.data?.status || error.response.data);
-      }
-      throw error;
+      console.log(error.isAxiosError ? error.response.data?.status || error.response.data : inspect(error));
+      const operation_id = error.response?.data?.status?.operation_id;
+      return `${process.env.ORIGIN_URL}/error${operation_id ? `?operation_id=${operation_id}` : ''}`;
     }
   }
 
@@ -185,9 +190,7 @@ class RapydService {
   private hashSignature(signature: string, key: string): string {
     const hash = crypto.createHmac('sha256', key);
     hash.update(signature);
-    const hashSignature = Buffer.from(hash.digest('hex')).toString('base64');
-
-    return hashSignature;
+    return Buffer.from(hash.digest('hex')).toString('base64');
   }
 
   private generateRandomString(size: number): string {

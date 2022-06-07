@@ -1,0 +1,8 @@
+{
+  "short_name": "React App",
+  "name": "Rapyd Create React App Checkout Integration",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

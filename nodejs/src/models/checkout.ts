@@ -1,9 +1,9 @@
 import { Expose } from 'class-transformer';
-import { Equals, IsNumber, IsNumberString, IsOptional, IsPositive, IsString, IsUrl } from 'class-validator';
-import { isNumberObject } from 'util/types';
+import { IsOptional, IsString, Validate } from 'class-validator';
+import { CustomCheckoutAmountValidator } from '@/validators/amountValidator';
 
 export class CreateCheckoutBody {
-  @IsPositive()
+  @Validate(CustomCheckoutAmountValidator)
   amount: number;
 
   @IsString()
@@ -12,6 +12,7 @@ export class CreateCheckoutBody {
   @IsString()
   currency: string;
 
+  @IsOptional()
   @IsString()
   customer: string;
 
@@ -26,6 +27,10 @@ export class CreateCheckoutBody {
   @IsOptional()
   @IsString()
   complete_checkout_url: string;
+
+  @IsOptional()
+  @IsString()
+  cancel_checkout_url: string;
 }
 
 export class CheckoutResult {

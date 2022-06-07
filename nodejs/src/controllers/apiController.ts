@@ -1,4 +1,18 @@
-import { Param, Body, Get, Post, Put, Delete, HttpCode, UseBefore, JsonController, QueryParam, Req, HeaderParam } from 'routing-controllers';
+import {
+  Param,
+  Body,
+  Get,
+  Post,
+  Delete,
+  HttpCode,
+  UseBefore,
+  JsonController,
+  QueryParam,
+  Req,
+  HeaderParam,
+  Res,
+  OnUndefined,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 
 import { validationMiddleware } from '@middlewares/validation.middleware';
@@ -7,7 +21,7 @@ import { CreateCustomerBody, Customer } from '@/models/customers';
 import { CreateCheckoutBody } from '@/models/checkout';
 import { CreatePaymentBody } from '@/models/payment';
 import webhookEventService from '@/services/webhookEventService';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { HttpException } from '@/exceptions/HttpException';
 import { WebhookEvent } from '@/models/webhookEvent';
 import { PaymentMethod } from '@/models/paymentMethod';
@@ -63,13 +77,13 @@ export class ApiController {
   }
 
   @Post('/checkout')
-  @HttpCode(200)
+  @OnUndefined(303)
   @UseBefore(validationMiddleware(CreateCheckoutBody, 'body'))
   @OpenAPI({ summary: 'Create a new payment checkout' })
-  async createCheckout(@Body() body: CreateCheckoutBody) {
+  async createCheckout(@Res() res: Response, @Body() body: CreateCheckoutBody) {
     const rapydService = new RapydService();
-    const checkout = await rapydService.createPaymentCheckout(body);
-    return checkout;
+    const redirectUrl = await rapydService.createPaymentCheckout(body);
+    res.redirect(303, redirectUrl);
   }
 
   @Post('/payment')

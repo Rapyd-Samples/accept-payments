@@ -111,7 +111,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -146,3 +145,5 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/python
 backend/.vscode/PythonImportHelper-v2-Completion.json
 uploads
+
+.vscode
