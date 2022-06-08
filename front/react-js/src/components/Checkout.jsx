@@ -79,7 +79,13 @@ const Checkout = () => {
                 maxLength={15}
             />
             <StyledFlex>
-                <AmountDiv>{amountAvailable && formatAmount({currency, amount})}</AmountDiv>
+                {amountAvailable &&
+                    <AmountDiv>
+                        <AmountText>
+                            {formatAmount({currency, amount})}
+                        </AmountText>
+                    </AmountDiv>
+                }
                 <button onClick={submitForm} disabled={!amountAvailable || formDisabled}>
                     Generate Checkout Page
                 </button>
@@ -120,7 +126,15 @@ const StyledFlex = styled.div`
 `;
 
 const AmountDiv = styled.div`
-  min-height: 20px;
+  width: 220px;
+  background: #f0f2f3;
+  min-height: 51px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding: 16px 25px 16px 25px;
+  flex-wrap: wrap;
 `;
 
 const StyledSelect = styled(Select)`
@@ -131,3 +145,11 @@ const StyledCurrencyInput = styled(CurrencyInput)`
   height: 38px;
   width: 100%;
 `
+
+const AmountText = styled.div`
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: black;
+  overflow-wrap: anywhere;
+`;
