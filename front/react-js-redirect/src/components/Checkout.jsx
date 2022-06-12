@@ -48,7 +48,7 @@ const Checkout = () => {
     const amountAvailable = amount && currency && country;
     const submitForm = () => {
         setFormDisabled(true);
-        const form = buildForm({url: `${config.baseURL}/checkout`, data: {amount, currency, country}});
+        const form = buildForm({url: `${config.baseURL}/checkout/redirect`, data: {amount, currency, country}});
         form.submit();
     };
     return (

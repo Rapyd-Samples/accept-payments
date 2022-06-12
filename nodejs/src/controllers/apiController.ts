@@ -76,14 +76,23 @@ export class ApiController {
     return paymentRequiredFields;
   }
 
-  @Post('/checkout')
+  @Post('/checkout/redirect')
   @OnUndefined(303)
   @UseBefore(validationMiddleware(CreateCheckoutBody, 'body'))
-  @OpenAPI({ summary: 'Create a new payment checkout' })
-  async createCheckout(@Res() res: Response, @Body() body: CreateCheckoutBody) {
+  @OpenAPI({ summary: 'redirects to a new checkout page' })
+  async redirectToCheckout(@Res() res: Response, @Body() body: CreateCheckoutBody) {
     const rapydService = new RapydService();
-    const redirectUrl = await rapydService.createPaymentCheckout(body);
+    const redirectUrl = await rapydService.createCheckoutRedirectURL(body);
     res.redirect(303, redirectUrl);
+  }
+
+  @Post('/checkout')
+  @HttpCode(200)
+  @UseBefore(validationMiddleware(CreateCheckoutBody, 'body'))
+  @OpenAPI({ summary: 'Create a new payment checkout' })
+  async createCheckout(@Body() body: CreateCheckoutBody) {
+    const rapydService = new RapydService();
+    return await rapydService.createPaymentCheckout(body);
   }
 
   @Post('/payment')

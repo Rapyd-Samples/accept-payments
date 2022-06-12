@@ -105,7 +105,7 @@ class RapydService {
     }
   }
 
-  public async createPaymentCheckout(body: CreateCheckoutBody): Promise<string> {
+  public async createCheckoutRedirectURL(body: CreateCheckoutBody): Promise<string> {
     try {
       const response = await this._axiosClient.post<RapydResponse<any[]>>(`/v1/checkout`, {
         ...body,
@@ -113,7 +113,7 @@ class RapydService {
         cancel_checkout_url: body.cancel_checkout_url || process.env.ORIGIN_URL,
       });
 
-      const result = plainToClass(CheckoutResult, response.data.data, { excludeExtraneousValues: true }) as unknown as CheckoutResult;
+      const result = plainToClass(CheckoutResult, response.data.data as Record<string, any>);
       return result.redirect_url;
     } catch (error) {
       console.log(error.isAxiosError ? error.response.data?.status || error.response.data : inspect(error));
@@ -122,11 +122,24 @@ class RapydService {
     }
   }
 
+  public async createPaymentCheckout(body: CreateCheckoutBody): Promise<Record<string, any>> {
+    try {
+      const response = await this._axiosClient.post<RapydResponse<any[]>>(`/v1/checkout`, body);
+
+      return plainToClass(CheckoutResult, response.data.data, { excludeExtraneousValues: true });
+    } catch (error) {
+      if (error.isAxiosError) {
+        throw new HttpException(+error.response.status, error.response.data?.status || error.response.data);
+      }
+      throw error;
+    }
+  }
+
   public async createPayment(body: CreatePaymentBody): Promise<any> {
     try {
       const response = await this._axiosClient.post<RapydResponse<any>>(`/v1/payments`, body);
 
-      return plainToClass(PaymentResult, response.data.data, { excludeExtraneousValues: true });
+      return plainToClass(PaymentResult, response.data.data);
     } catch (error) {
       if (error.isAxiosError) {
         throw new HttpException(+error.response.status, error.response.data?.status || error.response.data);
