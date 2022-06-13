@@ -7,7 +7,7 @@ import { Bars } from  'react-loader-spinner'
 
 
 
-const DEFAULT_GENERATE_PARAMS = {amount: 100, country: "IL", currency: "USD"};
+const DEFAULT_GENERATE_PARAMS = {amount: 1001, country: "IL", currency: "USD", complete_payment_url: "http://127.0.0.1:3000/3ds-complete"};
 
 function App() {
   const [checkoutObject, setCheckoutObject] = useState<Record<string, any> | null>(null);
@@ -59,9 +59,31 @@ function App() {
           page_type: "collection",
           meta: {}
       });
+
       window.addEventListener('onCheckoutPaymentSuccess', (event) => {
           const payment = (event as any).detail;
-          setPayment(payment);
+          const redirectURL = payment.redirect_url;
+          if (redirectURL) {
+              const frame = window.document.createElement('iframe');
+              frame.setAttribute('src', redirectURL);
+              frame.setAttribute('id', 'rapyd-checkout-frame');
+              frame.setAttribute('allow', 'payment; camera');
+              frame.style.width = '100%';
+              frame.style.minHeight = '700px';
+
+              const toolkitDiv = document.getElementById('rapyd-checkout-wrapper');
+              if (toolkitDiv) {
+                toolkitDiv.appendChild(frame);
+              }
+              window.addEventListener('message', e => {
+                  if (e.data.hasOwnProperty('success')) {
+                      setPayment(payment);
+                      frame.parentNode?.removeChild(frame);
+                  }
+              });
+          } else {
+            setPayment(payment);
+          }
       })
 
       window.addEventListener('onCheckoutPaymentFailure', (event) => {
@@ -92,7 +114,9 @@ function App() {
   return (
       <Wrapper>
         {generating ? <div>Loading...</div> : <button style={{display: payment ? 'none' : 'initial'}} onClick={checkoutOpen ? closeCheckout : loadCheckout} disabled={Boolean(error) || !checkoutObject}>{checkoutOpen ? 'Close Checkout' : 'Open Checkout'}</button>}
-        {checkoutId && <div style={{display: loading ? 'none' : 'initial'}} id="rapyd-checkout"></div>}
+          <div id="rapyd-checkout-wrapper" style={{width: '100vw'}}>
+            {checkoutId && <div style={{display: loading ? 'none' : 'initial'}} id="rapyd-checkout"></div>}
+          </div>
         {loading && <Bars
             height="100"
             width="100"
