@@ -6,10 +6,9 @@ import (
 )
 
 const (
-	BASERAPYDAPIURL  = "https://sandboxapi.rapyd.net"
-	// When deploying to a server, set localhost = "" and port = 80.
-	HOST = "localhost"
-	PORT = 8080
+	HOST            = ""
+	PORT            = 8080
+	BASERAPYDAPIURL = "https://sandboxapi.rapyd.net"
 )
 
 func main() {
