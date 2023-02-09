@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -43,6 +44,9 @@ func (rc *RapydClient) request(method string, urlPath string, body []byte) ([]by
 	salt := randomHexString(8)
 	key := os.Getenv("RAPYD_ACCESS_KEY")
 	secret := os.Getenv("RAPYD_SECRET_KEY")
+	if key == "" || secret == "" {
+		log.Fatalln("Please set the environment variables RAPYD_ACCESS_KEY and RAPYD_SECRET_KEY before starting the server.")
+	}
 	req.Header.Set("access_key", key)
 	req.Header.Set("salt", salt)
 	req.Header.Set("timestamp", timestamp)
