@@ -41,7 +41,7 @@ func (rc *RapydClient) request(method string, urlPath string, body []byte) ([]by
 		return nil, fmt.Errorf("Failed to create request: %v", err)
 	}
 	timestamp := fmt.Sprintf("%d", time.Now().Unix())
-	salt := randomHexString(8)
+	salt := fmt.Sprintf("%016x", rand.Uint64())
 	key := os.Getenv("RAPYD_ACCESS_KEY")
 	secret := os.Getenv("RAPYD_SECRET_KEY")
 	if key == "" || secret == "" {
@@ -79,13 +79,4 @@ func signature(httpMethod string, urlPath string, salt string, timestamp string,
 	hexdigest := make([]byte, hex.EncodedLen(hash.Size()))
 	hex.Encode(hexdigest, hash.Sum(nil))
 	return base64.StdEncoding.EncodeToString(hexdigest)
-}
-
-// randomHexString generates a random byte slice of lenghs s and returns it as a string with 2*s hexadecimal digits.
-func randomHexString(s int) string {
-	b := make([]byte, s)
-	for i := 0; i < s; i++ {
-		b[i] = byte(rand.Intn(256))
-	}
-	return fmt.Sprintf("%x", b)
 }
