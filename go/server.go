@@ -128,12 +128,12 @@ func (s *Server) createCheckoutPage(host string, c int) (string, error) {
 	}
 
 	// parse the response dynamically and return the redirect URL
-	var checkoutResponse map[string]interface{}
+	var checkoutResponse map[string]any
 	err = json.Unmarshal(body, &checkoutResponse)
 	if err != nil {
 		return "", fmt.Errorf("cannot unmarshal response from /v1/checkout: %w, body: %s", err, string(body))
 	}
-	status := checkoutResponse["status"].(map[string]interface{})
+	status := checkoutResponse["status"].(map[string]any)
 	if status["error_code"] != "" {
 		return "", fmt.Errorf("error creating checkout page: %s: %s",
 			status["status"],
@@ -141,6 +141,6 @@ func (s *Server) createCheckoutPage(host string, c int) (string, error) {
 		)
 	}
 
-	data := checkoutResponse["data"].(map[string]interface{})
+	data := checkoutResponse["data"].(map[string]any)
 	return data["redirect_url"].(string), nil
 }
