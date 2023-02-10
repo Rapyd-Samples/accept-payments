@@ -7,7 +7,7 @@ The Go code in this folder implements a purchase flow for woolen socks. (Sorry, 
 ## What do you need to start
 - An installed Go toolchain. (https://go.dev/dl)
 - A Rapyd Account (https://dashboard.rapyd.net/sign-up)
-- For redirects and webhooks to work properly it is necessary to expose the corresponding port of your computer to the outside world (by default port 5000). \
+- For redirects to work properly it is necessary to expose the server's local port of your computer to the outside world. \
   There are many ways to achieve this. You can use the ngrok application (https://ngrok.com), which will generate a random web address for you and redirect all traffic to a specified port on your local machine. \
   Remote dev environments like Gitpod.io usually provide a similar service to expose local ports through a generated proxy URL. See the documents for your remote dev environment provider.
  
