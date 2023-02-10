@@ -94,6 +94,16 @@ func (s Server) cancelHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, html["cancel"])
 }
 
+// CheckoutPage contains the data we send to the Rapyd API as JSON.
+type CheckoutPage struct {
+	Description         string  `json:"description"`
+	Amount              float64 `json:"amount"`
+	Country             string  `json:"country"`
+	Currency            string  `json:"currency"`
+	CompleteCheckoutURL string  `json:"complete_checkout_url"`
+	CancelCheckoutURL   string  `json:"cancel_checkout_url"`
+}
+
 // createCheckoutPage calls the Rapyd API to create the hosted checkout page that has been set up in the Rapyd developer portal.
 func (s *Server) createCheckoutPage(host string, c int) (string, error) {
 
@@ -117,18 +127,20 @@ func (s *Server) createCheckoutPage(host string, c int) (string, error) {
 		return "", fmt.Errorf("error calling /v1/checkout: %w", err)
 	}
 
-	// parse the response into a CheckoutPage struct and return the redirect URL
-	var checkoutResponse CheckoutPageResponse
+	// parse the response dynamically and return the redirect URL
+	var checkoutResponse map[string]interface{}
 	err = json.Unmarshal(body, &checkoutResponse)
 	if err != nil {
 		return "", fmt.Errorf("cannot unmarshal response from /v1/checkout: %w, body: %s", err, string(body))
 	}
-	if checkoutResponse.Status.ErrorCode != "" {
+	status := checkoutResponse["status"].(map[string]interface{})
+	if status["error_code"] != "" {
 		return "", fmt.Errorf("error creating checkout page: %s: %s",
-			checkoutResponse.Status.Status,
-			checkoutResponse.Status.Message,
+			status["status"],
+			status["message"],
 		)
 	}
 
-	return checkoutResponse.Data.RedirectURL, nil
+	data := checkoutResponse["data"].(map[string]interface{})
+	return data["redirect_url"].(string), nil
 }
