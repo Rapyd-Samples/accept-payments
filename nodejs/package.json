@@ -31,7 +31,7 @@
     "http-method-enum": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "morgan": "^1.10.0",
+    "morgan": "^1.11.0",
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.9.0",
     "routing-controllers-openapi": "^3.0.0",
